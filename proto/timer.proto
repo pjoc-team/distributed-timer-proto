@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package timer;
+
+import "google/api/httpbody.proto";
+import "google/protobuf/any.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+service Timer {
+  rpc Schedule(ScheduleRequest) returns(ScheduleResponse){
+    option(google.api.http) = {
+      post: "/v1/timer/schedule"
+    };
+  };
+}
+
+message ScheduleRequest{
+  // schedule_id schedule id
+  string schedule_id = 1;
+
+  // due_time time to be triggered
+  string due_time = 2;
+
+  // target target to invoke when due the time
+  string target = 3;
+
+  google.protobuf.Any any = 4;
+}
+
+message ScheduleResponse{
+  string id = 1;
+}
